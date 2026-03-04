@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ReuRider Admin Portal</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="https://reurideronline-ph.github.io/reurider-dingle/icon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://reurideronline-ph.github.io/reurider-dingle/icon.png">
+  <link rel="apple-touch-icon" href="https://reurideronline-ph.github.io/reurider-dingle/icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ReuRider Admin">
+  <meta name="application-name" content="ReuRider Admin">
+  <meta name="theme-color" content="#7B2D00">
+  <script>
+    var manifest = {
+      name: "ReuRider Admin Portal",
+      short_name: "ReuRider Admin",
+      description: "ReuRider Online Market - Admin Portal",
+      start_url: window.location.href,
+      scope: "./",
+      display: "standalone",
+      orientation: "portrait",
+      background_color: "#7B2D00",
+      theme_color: "#7B2D00",
+      icons: [
+        { src: "https://reurideronline-ph.github.io/reurider-dingle/icon.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
+        { src: "https://reurideronline-ph.github.io/reurider-dingle/icon.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }
+      ]
+    };
+    var blob = new Blob([JSON.stringify(manifest)], {type: "application/manifest+json"});
+    var link = document.createElement("link");
+    link.rel = "manifest";
+    link.href = URL.createObjectURL(blob);
+    document.head.appendChild(link);
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #7B2D00; width: 100vw; height: 100vh; overflow: hidden; }
+
+    #splash {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 40%, #FFA552 70%, #FFD166 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 999; transition: opacity 0.5s ease;
+    }
+
+    #splash img {
+      width: 140px; height: 140px;
+      border-radius: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    #splash .app-name {
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 26px; font-weight: 800;
+      margin-top: 22px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    #splash .app-sub {
+      color: rgba(255,255,255,0.9);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px; font-weight: 500;
+      margin-top: 6px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    #splash .admin-badge {
+      margin-top: 14px;
+      padding: 6px 20px;
+      background: rgba(255,255,255,0.25);
+      border: 2px solid rgba(255,255,255,0.6);
+      border-radius: 20px;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    #splash .loading-bar-wrap {
+      margin-top: 28px;
+      width: 160px; height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 4px; overflow: hidden;
+    }
+
+    #splash .loading-bar {
+      height: 100%; width: 0%;
+      background: white;
+      border-radius: 4px;
+      animation: loadbar 4s ease-in-out forwards;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    @keyframes loadbar {
+      0%   { width: 0%; }
+      40%  { width: 60%; }
+      80%  { width: 85%; }
+      100% { width: 100%; }
+    }
+
+    #app-frame {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none; z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="splash">
+    <img src="https://reurideronline-ph.github.io/reurider-dingle/icon.png" alt="ReuRider">
+    <div class="app-name">ReuRider</div>
+    <div class="app-sub">Online Market</div>
+    <div class="admin-badge">⚙️ Admin Portal</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar"></div>
+    </div>
+  </div>
+
+  <iframe
+    id="app-frame"
+    src="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?page=admin"
+    allow="fullscreen"
+    allowfullscreen
+  ></iframe>
+
+  <script>
+    var frame = document.getElementById("app-frame");
+    var splash = document.getElementById("splash");
+
+    frame.onload = function() {
+      setTimeout(function() {
+        splash.style.opacity = "0";
+        setTimeout(function() { splash.style.display = "none"; }, 500);
+      }, 800);
+    };
+
+    setTimeout(function() {
+      splash.style.opacity = "0";
+      setTimeout(function() { splash.style.display = "none"; }, 500);
+    }, 5000);
+  </script>
+
+</body>
+</html>
